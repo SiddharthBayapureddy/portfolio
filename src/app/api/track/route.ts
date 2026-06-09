@@ -3,7 +3,14 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(req: Request) {
   try {
-    const { path, referrer } = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+
+    const { path, referrer } = body;
 
     if (!path || typeof path !== "string") {
       return NextResponse.json({ error: "Invalid path" }, { status: 400 });
@@ -11,7 +18,15 @@ export async function POST(req: Request) {
 
     const userAgent = req.headers.get("user-agent") ?? "";
 
-    const supabase = createAdminClient();
+    let supabase;
+    try {
+      supabase = createAdminClient();
+    } catch (err) {
+      console.error("Supabase admin configuration error:", err);
+      // We don't return 500 for tracking errors to avoid breaking the frontend
+      return NextResponse.json({ error: "Tracking configuration error" }, { status: 500 });
+    }
+
     const { error } = await supabase.from("page_views").insert({
       path,
       referrer: referrer ?? null,
@@ -20,11 +35,12 @@ export async function POST(req: Request) {
 
     if (error) {
       console.error("Failed to track page view:", error.message);
-      return NextResponse.json({ error: "Tracking failed" }, { status: 500 });
+      return NextResponse.json({ error: "Database insert failed" }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  } catch (err) {
+    console.error("Unexpected error in tracking API:", err);
+    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
   }
 }

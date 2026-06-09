@@ -54,8 +54,14 @@ export function Hero() {
           {ABOUT.bio}
         </motion.p>
         <motion.div variants={fadeUp} className="mt-8 flex gap-3">
-          <Button render={<Link href="/projects" />}>View Projects</Button>
-          <Button variant="outline" render={<Link href="/contact" />}>
+          <Button nativeButton={false} render={<Link href="/projects" />}>
+            View Projects
+          </Button>
+          <Button
+            nativeButton={false}
+            variant="outline"
+            render={<Link href="/contact" />}
+          >
             Contact Me
           </Button>
         </motion.div>

@@ -64,16 +64,6 @@ export function Navbar() {
               <NavLink href={link.href} label={link.label} />
             </li>
           ))}
-          <li>
-            <a
-              href={SITE.resumePath}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Resume
-            </a>
-          </li>
         </ul>
 
         <Sheet open={open} onOpenChange={setOpen}>

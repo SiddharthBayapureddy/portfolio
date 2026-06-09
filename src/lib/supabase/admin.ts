@@ -8,12 +8,18 @@ export function createAdminClient() {
     throw new Error("Supabase admin credentials are not configured.");
   }
 
-  return createClient(url, key,
-    {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    }
-  );
+  let cleanUrl = url;
+  try {
+    const urlObj = new URL(url);
+    cleanUrl = urlObj.origin;
+  } catch {
+    throw new Error(`Invalid Supabase URL: "${url}". It must start with https://`);
+  }
+
+  return createClient(cleanUrl, key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
 }

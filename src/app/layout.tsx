@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageViewTracker } from "@/components/shared/PageViewTracker";
+import { WittyConsole } from "@/components/shared/WittyConsole";
 import { createMetadata } from "@/lib/metadata";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <PageViewTracker />
+        <WittyConsole />
         <Navbar />
         <main className="flex-1 pt-14">{children}</main>
         <Footer />

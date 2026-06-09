@@ -10,6 +10,7 @@ export type Project = {
   thumbnail_url: string | null;
   pinned: boolean;
   published: boolean;
+  order_index: number;
   created_at: string;
 };
 
@@ -28,4 +29,26 @@ export type ContactSubmission = {
   name: string;
   email: string;
   message: string;
+};
+
+export type Experience = {
+  id: string;
+  role: string;
+  company: string;
+  duration: string;
+  description: string | null;
+  skills: string[] | null;
+  link: string | null;
+  pinned: boolean;
+  published: boolean;
+  order_index: number;
+  created_at: string;
+};
+
+export type Skill = {
+  id: string;
+  name: string;
+  category: string;
+  order_index: number;
+  created_at: string;
 };
