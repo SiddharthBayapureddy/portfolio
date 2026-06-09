@@ -13,7 +13,7 @@ export default async function BlogPage() {
   const posts = await getPosts();
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24">
+    <div className="mx-auto max-w-5xl px-6 py-24">
       <AnimatedSection>
         <h1 className="text-3xl font-medium tracking-tight text-foreground">
           Blog
@@ -23,7 +23,15 @@ export default async function BlogPage() {
         </p>
       </AnimatedSection>
       <div className="mt-12">
-        <PostList posts={posts} />
+        {posts.length > 0 ? (
+          <PostList posts={posts} />
+        ) : (
+          <div className="rounded-lg border border-dashed border-border p-8 text-center">
+            <p className="text-sm text-muted-foreground italic">
+              Nothing here yet. I&apos;m either thinking deeply or procrastinating. Probably latter.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

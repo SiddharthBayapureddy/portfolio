@@ -11,7 +11,7 @@ export const metadata = createMetadata({
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24">
+    <div className="mx-auto max-w-5xl px-6 py-24">
       <AnimatedSection>
         <h1 className="text-3xl font-medium tracking-tight text-foreground">
           Contact

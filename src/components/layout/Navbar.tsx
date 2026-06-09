@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { NAV_LINKS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import { useToast } from "@/components/shared/EasterEggProvider";
+
 function NavLink({
   href,
   label,
@@ -25,16 +27,28 @@ function NavLink({
   onClick?: () => void;
 }) {
   const pathname = usePathname();
+  const { showToast } = useToast();
+  
   const isActive =
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  let tooltip: string | undefined;
+  if (label === "Resume") tooltip = "Warning: may cause unsolicited hiring attempts";
+  if (label === "Blog") tooltip = "coming soon™";
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    if (label === "Resume") showToast("Warning: may cause unsolicited hiring attempts");
+  };
 
   return (
     <Link
       href={href}
-      onClick={onClick}
+      onClick={handleClick}
+      title={tooltip}
       className={cn(
-        "relative text-sm text-muted-foreground transition-colors hover:text-foreground",
-        isActive && "text-foreground"
+        "relative text-sm transition-colors",
+        isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
       )}
     >
       {label}
@@ -47,16 +61,40 @@ function NavLink({
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [, setLogoClicks] = useState(0);
+  const clickTimeout = useRef<NodeJS.Timeout>(null);
+
+  const handleLogoClick = () => {
+    setLogoClicks((prev) => {
+      const newCount = prev + 1;
+      if (newCount === 5) {
+        window.dispatchEvent(new CustomEvent("trigger-supernova"));
+        return 0; // reset
+      }
+      return newCount;
+    });
+
+    if (clickTimeout.current) clearTimeout(clickTimeout.current);
+    clickTimeout.current = setTimeout(() => setLogoClicks(0), 1000);
+  };
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-sm">
-      <nav className="mx-auto flex h-14 max-w-3xl items-center justify-between px-6">
-        <Link
-          href="/"
-          className="font-mono text-sm text-foreground transition-colors hover:text-muted-foreground"
-        >
-          SB
-        </Link>
+    <header className="fixed top-0 z-50 w-full border-b border-border bg-[#0a0a0a]/80 backdrop-blur-sm transition-all duration-300">
+      <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
+        <div className="group relative">
+          <Link
+            href="/"
+            onClick={handleLogoClick}
+            className="font-mono text-sm text-foreground transition-colors hover:text-muted-foreground select-none"
+          >
+            SB
+          </Link>
+          <div className="pointer-events-none absolute left-0 top-full mt-2 w-max opacity-0 transition-opacity delay-1000 group-hover:opacity-100">
+            <span className="rounded border border-border bg-background px-2 py-1 font-mono text-[10px] text-muted-foreground">
+              not the sandwich
+            </span>
+          </div>
+        </div>
 
         <ul className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
@@ -77,11 +115,13 @@ export function Navbar() {
               />
             }
           >
-            <Menu className="size-4" />
+            <Menu className="size-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="w-64">
+          <SheetContent side="right" className="w-64 border-border bg-[#0a0a0a]">
             <SheetHeader>
-              <SheetTitle className="font-mono text-sm">{SITE.name}</SheetTitle>
+              <SheetTitle className="font-mono text-sm text-left text-foreground">
+                {SITE.name}
+              </SheetTitle>
             </SheetHeader>
             <ul className="mt-8 flex flex-col gap-6">
               {NAV_LINKS.map((link) => (
@@ -93,17 +133,6 @@ export function Navbar() {
                   />
                 </li>
               ))}
-              <li>
-                <a
-                  href={SITE.resumePath}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Resume
-                </a>
-              </li>
             </ul>
           </SheetContent>
         </Sheet>

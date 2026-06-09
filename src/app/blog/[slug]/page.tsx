@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <ProgressBar />
-      <article className="mx-auto max-w-3xl px-6 py-24">
+      <article className="mx-auto max-w-5xl px-6 py-24">
         <Link
           href="/blog"
           className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"

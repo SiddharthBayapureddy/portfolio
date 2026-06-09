@@ -12,10 +12,10 @@ export function FeaturedExperiences({ experiences }: FeaturedExperiencesProps) {
 
   return (
     <section className="border-t border-border px-6 py-24">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-5xl">
         <AnimatedSection>
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-medium tracking-tight text-foreground">
+            <h2 className="text-sm font-mono uppercase tracking-wider text-muted-foreground">
               Experience
             </h2>
             <Link
@@ -26,7 +26,7 @@ export function FeaturedExperiences({ experiences }: FeaturedExperiencesProps) {
             </Link>
           </div>
           
-          <div className="mt-12">
+          <div className="mt-12 space-y-0">
             {experiences.map((exp) => (
               <ExperienceItem key={exp.id} experience={exp} />
             ))}

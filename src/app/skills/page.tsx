@@ -25,7 +25,7 @@ export default async function SkillsPage() {
   const categories = Object.keys(groupedSkills);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24">
+    <div className="mx-auto max-w-5xl px-6 py-24">
       <AnimatedSection>
         <h1 className="text-3xl font-medium tracking-tight text-foreground">
           Skills
@@ -37,13 +37,18 @@ export default async function SkillsPage() {
 
       <div className="mt-12 space-y-12">
         {categories.length > 0 ? (
-          categories.map((category) => (
-            <SkillCategoryBlock
-              key={category}
-              category={category}
-              skills={groupedSkills[category]}
-            />
-          ))
+          <>
+            {categories.map((category) => (
+              <SkillCategoryBlock
+                key={category}
+                category={category}
+                skills={groupedSkills[category]}
+              />
+            ))}
+            <p className="mt-8 text-[10px] text-muted-foreground/60 italic">
+              and yes, I&apos;ve Googled all of these
+            </p>
+          </>
         ) : (
           <div className="rounded-lg border border-dashed border-border p-8 text-center">
             <p className="text-sm text-muted-foreground">

@@ -12,7 +12,6 @@ export const SITE = {
 export const SOCIAL = {
   linkedin: "https://www.linkedin.com/in/siddharth-bayapureddy/",
   github: "https://github.com/SiddharthBayapureddy",
-  instagram: "https://www.instagram.com/siddharth.b___/",
 } as const;
 
 export const NAV_LINKS = [

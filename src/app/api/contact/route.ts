@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   try {
@@ -10,50 +10,48 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    const { name, email, message } = body;
+    const { name, message } = body;
 
-    if (
-      !name ||
-      typeof name !== "string" ||
-      !email ||
-      typeof email !== "string" ||
-      !message ||
-      typeof message !== "string"
-    ) {
+    if (!message || typeof message !== "string") {
       return NextResponse.json(
-        { error: "Name, email, and message are required." },
+        { error: "A message is required. Don't leave me hanging." },
         { status: 400 }
       );
     }
 
-    let supabase;
-    try {
-      supabase = createAdminClient();
-    } catch (err) {
-      console.error("Supabase admin configuration error:", err);
+    const senderName = name?.trim() || "An Anonymous Vibecoder";
+
+    const user = process.env.EMAIL_USER;
+    const pass = process.env.EMAIL_PASS;
+
+    if (!user || !pass) {
+      console.error("SMTP credentials are not configured in environment variables.");
       return NextResponse.json(
-        { error: "Server configuration error." },
+        { error: "Server configuration error. Hit me up on LinkedIn instead." },
         { status: 500 }
       );
     }
 
-    const { error } = await supabase.from("contact_submissions").insert({
-      name: name.trim(),
-      email: email.trim(),
-      message: message.trim(),
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user, pass },
     });
 
-    if (error) {
-      console.error("Failed to submit contact form:", error.message);
-      return NextResponse.json(
-        { error: "Failed to save message to database." },
-        { status: 500 }
-      );
-    }
+    const mailOptions = {
+      from: `"${senderName}" <${user}>`, // Spoofing the 'from' name, but email is your own to avoid spam filters
+      to: user, // Send to yourself
+      subject: `Portfolio Message from ${senderName}`,
+      text: `You received a new message from your portfolio contact form:\n\nName: ${senderName}\n\nMessage:\n${message}`,
+    };
+
+    await transporter.sendMail(mailOptions);
 
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("Unexpected error in contact API:", err);
-    return NextResponse.json({ error: "An unexpected error occurred." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to beam message into the ether. Try again?" },
+      { status: 500 }
+    );
   }
 }

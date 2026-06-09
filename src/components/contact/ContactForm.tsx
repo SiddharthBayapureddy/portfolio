@@ -26,7 +26,6 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.get("name"),
-          email: formData.get("email"),
           message: formData.get("message"),
         }),
       });
@@ -49,7 +48,7 @@ export function ContactForm() {
   if (state === "success") {
     return (
       <p className="text-sm text-muted-foreground">
-        Message sent. I&apos;ll get back to you soon.
+        Got it. I&apos;ll respond faster than my code compiles.
       </p>
     );
   }
@@ -57,23 +56,12 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">Name (Optional)</Label>
         <Input
           id="name"
           name="name"
-          required
+          placeholder="what do I call you?"
           autoComplete="name"
-          disabled={state === "submitting"}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
           disabled={state === "submitting"}
         />
       </div>
@@ -84,6 +72,7 @@ export function ContactForm() {
           name="message"
           required
           rows={6}
+          placeholder="be honest, I can take it"
           disabled={state === "submitting"}
         />
       </div>
@@ -91,7 +80,7 @@ export function ContactForm() {
         <p className="text-sm text-destructive">{errorMessage}</p>
       )}
       <Button type="submit" disabled={state === "submitting"}>
-        {state === "submitting" ? "Sending…" : "Send message"}
+        {state === "submitting" ? "Vibecoding..." : "Send message"}
       </Button>
     </form>
   );

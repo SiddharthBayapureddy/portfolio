@@ -4,6 +4,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PageViewTracker } from "@/components/shared/PageViewTracker";
 import { WittyConsole } from "@/components/shared/WittyConsole";
+import { TabTitleManager } from "@/components/shared/TabTitleManager";
+import { EasterEggProvider } from "@/components/shared/EasterEggProvider";
 import { createMetadata } from "@/lib/metadata";
 import "./globals.css";
 
@@ -29,12 +31,22 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
+      {/* 
+        Hi there. You looked at the source. 
+        That's exactly the kind of person I want to work with.
+        siddharthbayapureddy@gmail.com 
+
+        good. now check /well-actually
+      */}
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <PageViewTracker />
-        <WittyConsole />
-        <Navbar />
-        <main className="flex-1 pt-14">{children}</main>
-        <Footer />
+        <EasterEggProvider>
+          <PageViewTracker />
+          <WittyConsole />
+          <TabTitleManager />
+          <Navbar />
+          <main className="flex-1 pt-14">{children}</main>
+          <Footer />
+        </EasterEggProvider>
       </body>
     </html>
   );
