@@ -6,6 +6,8 @@ import { PageViewTracker } from "@/components/shared/PageViewTracker";
 import { WittyConsole } from "@/components/shared/WittyConsole";
 import { TabTitleManager } from "@/components/shared/TabTitleManager";
 import { EasterEggProvider } from "@/components/shared/EasterEggProvider";
+import { PageTransition } from "@/components/shared/PageTransition";
+import { EasterEggPopup } from "@/components/shared/EasterEggPopup";
 import { createMetadata } from "@/lib/metadata";
 import "./globals.css";
 
@@ -44,8 +46,11 @@ export default function RootLayout({
           <WittyConsole />
           <TabTitleManager />
           <Navbar />
-          <main className="flex-1 pt-14">{children}</main>
+          <main className="flex-1 pt-14">
+            <PageTransition>{children}</PageTransition>
+          </main>
           <Footer />
+          <EasterEggPopup />
         </EasterEggProvider>
       </body>
     </html>

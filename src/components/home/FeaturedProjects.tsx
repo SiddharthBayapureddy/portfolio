@@ -9,7 +9,7 @@ type FeaturedProjectsProps = {
 
 export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
   return (
-    <section className="border-t border-border px-6 py-24">
+    <section className="px-6 py-24">
       <div className="mx-auto max-w-5xl">
         {projects.length > 0 && (
           <>

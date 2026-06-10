@@ -11,7 +11,7 @@ export function FeaturedExperiences({ experiences }: FeaturedExperiencesProps) {
   if (experiences.length === 0) return null;
 
   return (
-    <section className="border-t border-border px-6 py-24">
+    <section className="px-6 py-24">
       <div className="mx-auto max-w-5xl">
         <AnimatedSection>
           <div className="flex items-center justify-between">

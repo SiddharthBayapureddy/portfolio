@@ -1,7 +1,8 @@
 import { createMetadata } from "@/lib/metadata";
-import { SITE } from "@/lib/constants";
+import { SITE, SOCIAL } from "@/lib/constants";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { GithubIcon, LinkedinIcon } from "@/components/shared/Icons";
 
 export const metadata = createMetadata({
   title: "Contact",
@@ -22,6 +23,35 @@ export default function ContactPage() {
       </AnimatedSection>
       <AnimatedSection className="mt-12" delay={0.05}>
         <ContactForm />
+      </AnimatedSection>
+
+      <AnimatedSection className="mt-16 border-t border-border pt-10" delay={0.1}>
+        <h2 className="text-lg font-medium text-foreground">
+          Elsewhere
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          You can also find me on these platforms.
+        </p>
+        <div className="mt-8 flex gap-6">
+          <a
+            href={SOCIAL.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <GithubIcon className="size-6" />
+            <span className="text-sm font-medium">GitHub</span>
+          </a>
+          <a
+            href={SOCIAL.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <LinkedinIcon className="size-6" />
+            <span className="text-sm font-medium">LinkedIn</span>
+          </a>
+        </div>
       </AnimatedSection>
     </div>
   );

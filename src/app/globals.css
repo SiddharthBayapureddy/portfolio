@@ -94,21 +94,22 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
 
 @keyframes glitch-anim {
-  0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
-  14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
-  15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
-  49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
-  50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
-  99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
-  100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75); }
+  0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.9), -0.05em -0.025em 0 rgba(0, 255, 0, 0.9), -0.025em 0.05em 0 rgba(0, 0, 255, 0.9); }
+  14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.9), -0.05em -0.025em 0 rgba(0, 255, 0, 0.9), -0.025em 0.05em 0 rgba(0, 0, 255, 0.9); }
+  15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.9), 0.025em 0.025em 0 rgba(0, 255, 0, 0.9), -0.05em -0.05em 0 rgba(0, 0, 255, 0.9); }
+  49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.9), 0.025em 0.025em 0 rgba(0, 255, 0, 0.9), -0.05em -0.05em 0 rgba(0, 0, 255, 0.9); }
+  50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.9), 0.05em 0 0 rgba(0, 255, 0, 0.9), 0 -0.05em 0 rgba(0, 0, 255, 0.9); }
+  99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.9), 0.05em 0 0 rgba(0, 255, 0, 0.9), 0 -0.05em 0 rgba(0, 0, 255, 0.9); }
+  100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.9), -0.025em -0.025em 0 rgba(0, 255, 0, 0.9), -0.025em -0.05em 0 rgba(0, 0, 255, 0.9); }
 }
 
 .glitch-active {
-  animation: glitch-anim 1s linear infinite;
+  animation: glitch-anim 0.8s linear infinite;
 }
 
 [data-chaos="true"] .hero-name {
@@ -125,4 +126,53 @@
 
 [data-chaos="true"] * {
   border-color: rgba(255, 107, 107, 0.3) !important;
+}
+
+body.easter-egg-active section,
+body.easter-egg-active div:not(.blackhole-bg-container),
+body.easter-egg-active main {
+  overflow: visible !important;
+}
+
+body.easter-egg-active {
+  overflow: hidden !important; /* disable scrolling during easter egg */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--ring);
+}
+
+/* Matrix Mode */
+body.matrix-mode {
+  --foreground: #00ff41;
+  --muted-foreground: #008f11;
+  --background: #000000;
+  --surface: #000000;
+  --card: #000000;
+  --border: #003b00;
+}
+body.matrix-mode * {
+  font-family: var(--font-mono) !important;
+}
+body.matrix-mode .blackhole-bg-container {
+  filter: sepia(1) hue-rotate(80deg) saturate(3) brightness(0.8);
+}
+
+/* Barrel Roll */
+.barrel-roll {
+  animation: barrel-roll 2s cubic-bezier(0.65, 0, 0.35, 1) 1;
+}
+@keyframes barrel-roll {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

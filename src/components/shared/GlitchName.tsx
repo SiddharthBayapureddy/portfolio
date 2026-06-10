@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export function GlitchName({ text, className }: { text: string; className?: string }) {
+export function GlitchName({ text, className }: { text: ReactNode; className?: string }) {
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
+
+  useEffect(() => {
+    const triggerGlitch = () => {
+      setIsGlitching(true);
+      setTimeout(() => setIsGlitching(false), 1000);
+    };
+
+    const interval = setInterval(triggerGlitch, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleClick = () => {
     const newCount = clickCount + 1;
@@ -25,7 +35,7 @@ export function GlitchName({ text, className }: { text: string; className?: stri
   return (
     <span 
       onClick={handleClick}
-      className={cn("hero-name cursor-default select-none", isGlitching && "glitch-active", className)}
+      className={cn("hero-name cursor-default select-none inline-block", isGlitching && "glitch-active", className)}
     >
       {text}
     </span>
