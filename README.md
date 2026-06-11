@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Siddharth's Portfolio
 
-## Getting Started
+A modern, highly interactive portfolio website built with Next.js 16, React 19, and TailwindCSS 4. Welcome to my digital workspace.
 
-First, run the development server:
+**Live at:** [siddharthb.me](https://siddharthb.me) (or [siddharth-bayapureddy.vercel.app](https://siddharth-bayapureddy.vercel.app))
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Portfolio Screenshot Placeholder](/public/preview.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 16 (App Router)
+- **UI/Styling**: TailwindCSS v4, Shadcn UI
+- **Animations/3D**: Framer Motion, GSAP, React Three Fiber & Drei — Because static pages can be a bit boring, and we like a little bit of GPU flair.
+- **Backend/DB**: Supabase
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup & Running
 
-## Learn More
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy `.env.local.example` to `.env.local` and fill in your Supabase variables.
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Directory Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app`: Next.js App Router pages and layouts.
+- `src/components`: Reusable UI components, separated neatly by domain.
+- `src/lib`: Utilities, constants, and Supabase client configuration.
+- `supabase`: Supabase related configurations and schema definitions.
+- `public`: Static assets, images, and PDFs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+This portfolio uses server components where possible for better performance and SEO, falling back to client components only when interactivity (like GSAP or Three.js) is required. Data fetching is heavily integrated with Supabase.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Easter Eggs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site contains several interactive easter eggs to discover. Happy hunting:
+- **The Void**: Rapidly click the 'SB' logo 5 times.
+- **Konami Code**: ↑ ↑ ↓ ↓ ← → ← → B A. You know what to do.
+- **The Matrix**: Type 'matrix' anywhere on the screen.
+- **The Sudoers File**: Type 'sudo' anywhere. (This incident will be reported).
+- **Barrel Roll**: Type 'barrelroll' anywhere.
+- **Chaos Mode**: Type 'chaos' anywhere.
+- **Hold The Line**: Press and hold any Project Card for 1.5 seconds.
+- **Light Mode**: Try switching to light mode. (Bring sunglasses).
+- **The Truth**: Hover over the 'SB' logo for a bit.
+- **Live Demo**: Hover over the external link icon on a project.
+- **Self Written**: Click the copyright text in the footer.
+- **The Bottom**: Scroll to the absolute bottom of the page and stare into the abyss.
+- **Resume Warning**: Click the Resume link in the navbar.
