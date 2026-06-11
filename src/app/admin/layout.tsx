@@ -17,11 +17,11 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <div className="flex gap-6 items-center">
           <h1 className="text-xl font-bold">Admin Dashboard</h1>
           <nav className="flex gap-4">
-            <Link href="/admin" className="text-sm text-muted-foreground hover:text-foreground">Posts</Link>
-            <Link href="/admin/projects" className="text-sm text-muted-foreground hover:text-foreground">Projects</Link>
-            <Link href="/admin/experiences" className="text-sm text-muted-foreground hover:text-foreground">Experiences</Link>
-            <Link href="/admin/skills" className="text-sm text-muted-foreground hover:text-foreground">Skills</Link>
-            <Link href="/admin/settings" className="text-sm text-muted-foreground hover:text-foreground">Settings</Link>
+            <Link href="/admin" prefetch={true} className="text-sm text-muted-foreground hover:text-foreground">Posts</Link>
+            <Link href="/admin/projects" prefetch={true} className="text-sm text-muted-foreground hover:text-foreground">Projects</Link>
+            <Link href="/admin/experiences" prefetch={true} className="text-sm text-muted-foreground hover:text-foreground">Experiences</Link>
+            <Link href="/admin/skills" prefetch={true} className="text-sm text-muted-foreground hover:text-foreground">Skills</Link>
+            <Link href="/admin/settings" prefetch={true} className="text-sm text-muted-foreground hover:text-foreground">Settings</Link>
           </nav>
         </div>
         <form action={logout}>
