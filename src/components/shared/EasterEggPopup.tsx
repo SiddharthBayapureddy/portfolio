@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { useToast } from "@/components/shared/EasterEggProvider";
 
 const EASTER_EGGS = [
-  { name: "The Void", description: "Rapidly click the 'SB' logo 5 times." },
+  { name: "The Void", description: "Rapidly click the 'SB' logo 5 times (homepage only)." },
   { name: "Konami Code", description: "↑ ↑ ↓ ↓ ← → ← → B A. You know what to do." },
   { name: "The Matrix", description: "Type 'matrix' anywhere on the screen." },
   { name: "The Sudoers File", description: "Type 'sudo' anywhere." },

@@ -1,12 +1,10 @@
-import { checkAuth } from "@/app/actions/admin";
+
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PostEditor } from "@/components/admin/PostEditor";
 
 export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
-  if (!(await checkAuth())) {
-    redirect("/admin/login");
-  }
+
   
   const { id } = await params;
 

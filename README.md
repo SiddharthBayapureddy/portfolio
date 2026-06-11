@@ -41,7 +41,7 @@ This portfolio uses server components where possible for better performance and 
 ## Easter Eggs
 
 The site contains several interactive easter eggs to discover. Happy hunting:
-- **The Void**: Rapidly click the 'SB' logo 5 times.
+- **The Void**: Rapidly click the 'SB' logo 5 times (homepage only).
 - **Konami Code**: ↑ ↑ ↓ ↓ ← → ← → B A. You know what to do.
 - **The Matrix**: Type 'matrix' anywhere on the screen.
 - **The Sudoers File**: Type 'sudo' anywhere. (This incident will be reported).

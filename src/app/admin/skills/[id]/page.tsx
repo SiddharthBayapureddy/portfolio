@@ -1,10 +1,10 @@
-import { checkAuth } from "@/app/actions/admin";
+
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { SkillEditor } from "@/components/admin/SkillEditor";
 
 export default async function EditSkillPage({ params }: { params: Promise<{ id: string }> }) {
-  if (!(await checkAuth())) redirect("/admin/login");
+
   const { id } = await params;
   let skill = null;
   if (id !== "new") {

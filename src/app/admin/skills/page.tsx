@@ -1,4 +1,4 @@
-import { checkAuth, deleteSkill } from "@/app/actions/admin";
+import { deleteSkill } from "@/app/actions/admin";
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export default async function AdminSkills() {
-  if (!(await checkAuth())) redirect("/admin/login");
+
 
   const supabase = createAdminClient();
   const { data: skills } = await supabase.from("skills").select("*").order("order_index", { ascending: true });

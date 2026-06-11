@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { revalidatePath } from "next/cache";
 
-// A simple auth check
 export async function checkAuth() {
   const cookieStore = await cookies();
   const secret = cookieStore.get("admin_secret")?.value;
@@ -17,7 +16,7 @@ export async function checkAuth() {
   return true;
 }
 
-export async function login(formData: FormData) {
+export async function login(prevState: any, formData: FormData) {
   const secret = formData.get("secret") as string;
   const envSecret = process.env.ADMIN_SECRET;
 
@@ -38,13 +37,12 @@ export async function login(formData: FormData) {
 export async function logout() {
   const cookieStore = await cookies();
   cookieStore.delete("admin_secret");
-  redirect("/admin/login");
+  redirect("/admin");
 }
 
+
 export async function savePost(formData: FormData) {
-  if (!(await checkAuth())) {
-    throw new Error("Unauthorized");
-  }
+  if (!(await checkAuth())) throw new Error("Unauthorized");
 
   const id = formData.get("id") as string | null;
   const title = formData.get("title") as string;

@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
-import { checkAuth, logout } from "@/app/actions/admin";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { checkAuth, logout } from "@/app/actions/admin";
 import LoginPage from "./LoginPage";
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {

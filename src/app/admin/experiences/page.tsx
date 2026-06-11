@@ -1,4 +1,4 @@
-import { checkAuth, deleteExperience } from "@/app/actions/admin";
+import { deleteExperience } from "@/app/actions/admin";
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export default async function AdminExperiences() {
-  if (!(await checkAuth())) redirect("/admin/login");
+
 
   const supabase = createAdminClient();
   const { data: experiences } = await supabase.from("experiences").select("*").order("order_index", { ascending: true });

@@ -68,6 +68,7 @@ function NavLink({
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { showToast } = useToast();
+  const pathname = usePathname();
 
   // Easter Egg State
   const [easterEggActive, setEasterEggActive] = useState(false);
@@ -75,6 +76,7 @@ export function Navbar() {
   const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLogoClick = () => {
+    if (pathname !== "/") return;
     if (easterEggActive) return;
 
     clickCountRef.current += 1;
