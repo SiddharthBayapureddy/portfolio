@@ -32,9 +32,9 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
           onTagChange={setActiveTag}
         />
       )}
-      <div className="mt-8 grid gap-4">
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
         {filtered.map((project, i) => (
-          <AnimatedSection key={project.id} delay={i * 0.05}>
+          <AnimatedSection key={project.id} delay={i * 0.05} className="h-full">
             <ProjectCard project={project} />
           </AnimatedSection>
         ))}

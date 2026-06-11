@@ -77,9 +77,9 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   const { data, error } = await supabase
     .from("posts")
     .select("*")
-    .eq("slug", slug)
+    .eq("slug", decodeURIComponent(slug))
     .eq("published", true)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error(`Failed to fetch post "${slug}" from Supabase:`, error.message);
@@ -144,4 +144,24 @@ export async function getSkills(): Promise<Skill[]> {
   }
 
   return data ?? [];
+}
+
+export async function getSettings(): Promise<Record<string, string>> {
+  const supabase = createStaticClient();
+  if (!supabase) return {};
+
+  const { data, error } = await supabase
+    .from("site_settings")
+    .select("key, value");
+
+  if (error) {
+    console.error("Failed to fetch settings from Supabase:", error.message);
+    return {};
+  }
+
+  const settings: Record<string, string> = {};
+  data?.forEach((row) => {
+    settings[row.key] = row.value;
+  });
+  return settings;
 }

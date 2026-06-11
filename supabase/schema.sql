@@ -25,6 +25,7 @@ create table if not exists posts (
   excerpt text,
   content text,
   published boolean default false,
+  featured boolean default false,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -44,8 +45,14 @@ create table if not exists page_views (
   path text not null,
   referrer text,
   user_agent text,
+  ip text,
   created_at timestamptz default now()
 );
+
+-- View to always see the most recent views on top
+create or replace view recent_page_views as
+select * from page_views
+order by created_at desc;
 
 -- Row Level Security
 alter table projects enable row level security;

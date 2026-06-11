@@ -27,7 +27,6 @@ export function ProgressBar() {
     // Initial check
     onScroll();
 
-    updateProgress();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

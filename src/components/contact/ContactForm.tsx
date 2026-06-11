@@ -26,6 +26,7 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.get("name"),
+          email: formData.get("email"),
           message: formData.get("message"),
         }),
       });
@@ -62,6 +63,17 @@ export function ContactForm() {
           name="name"
           placeholder="what do I call you?"
           autoComplete="name"
+          disabled={state === "submitting"}
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="email">Email (Optional)</Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="so I can write back?"
+          autoComplete="email"
           disabled={state === "submitting"}
         />
       </div>

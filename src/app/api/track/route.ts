@@ -17,6 +17,7 @@ export async function POST(req: Request) {
     }
 
     const userAgent = req.headers.get("user-agent") ?? "";
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || req.headers.get("x-real-ip") || "unknown";
 
     let supabase;
     try {
@@ -31,6 +32,7 @@ export async function POST(req: Request) {
       path,
       referrer: referrer ?? null,
       user_agent: userAgent,
+      ip,
     });
 
     if (error) {

@@ -172,12 +172,19 @@ export default function BlackHole() {
       const speedBoost = scrollVelocity * 0.002;
       time += baseSpeed + speedBoost;
 
-      // Center exactly in the right half on desktop, center on mobile
-      const cx = width > 768 ? width * 0.7 : width / 2;
+      // Calculate the absolute maximum scroll distance of the page
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       
-      // Move slightly up by default (-30). 
-      // Add scrollY * 0.45 to push the entire starfield and black hole down relative to the canvas.
-      const cy = height / 2 - 30 + scrollY * 0.45;
+      // Progress from 0 to 1 exactly over the full scrollable length of the page.
+      // This guarantees it hits dead center EXACTLY at the bottom, making it as slow as possible.
+      const scrollProgress = Math.min(1, scrollY / maxScroll);
+      
+      // Interpolate X position from 0.7 to 0.5 on desktop so it smoothly moves to the middle
+      const desktopXFactor = 0.7 - (0.2 * scrollProgress);
+      const cx = width > 768 ? width * desktopXFactor : width / 2;
+      
+      // Keep it vertically centered on the screen since the canvas is fixed
+      const cy = height / 2;
       
       // Export exact coordinates for easter egg
       window.__bhSingularityX = cx;
@@ -194,8 +201,8 @@ export default function BlackHole() {
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, width, height);
 
-      // Fade out the entire black hole and stars as the user scrolls down
-      const fadeOpacity = Math.max(0, 1 - scrollY / (height * 0.8));
+      // Fade out slower as user scrolls over the entire page height, stopping at a subtle 0.15
+      const fadeOpacity = Math.max(0.15, 1 - (scrollY / maxScroll));
       ctx.globalAlpha = fadeOpacity;
 
       // 2. Star Field (Particles continuously getting sucked in)
@@ -476,7 +483,7 @@ export default function BlackHole() {
 
   return (
     <div 
-      className="blackhole-bg-container absolute inset-0 -z-10 h-full w-full pointer-events-none hidden md:block"
+      className="blackhole-bg-container fixed inset-0 -z-50 h-screen w-screen pointer-events-none hidden md:block"
     >
       <canvas
         ref={canvasRef}

@@ -15,14 +15,7 @@ export function createStaticClient(): SupabaseClient | null {
   let cleanUrl = url;
   try {
     const urlObj = new URL(url);
-    // Supabase client expects the base URL (e.g., https://xyz.supabase.co), 
-    // not the REST endpoint (https://xyz.supabase.co/rest/v1).
-    if (urlObj.pathname.includes("/rest/v1")) {
-      cleanUrl = urlObj.origin;
-    } else {
-      // Ensure no trailing slash
-      cleanUrl = urlObj.origin;
-    }
+    cleanUrl = urlObj.origin;
   } catch {
     console.error(`Invalid Supabase URL provided: "${url}". Ensure it includes the protocol (https://).`);
     return null;

@@ -2,6 +2,7 @@ import { createMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/constants";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { ArrowUpRight } from "lucide-react";
+import { getSettings } from "@/lib/data";
 
 export const metadata = createMetadata({
   title: "About",
@@ -9,7 +10,13 @@ export const metadata = createMetadata({
   path: "/about",
 });
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSettings();
+  
+  const aboutBio = settings?.about_page_bio || "I'm Siddharth Bayapureddy, a CS third-year at BITS Pilani, Hyderabad.\nI build at the intersection of artificial intelligence, machine learning, and real-world problems — turning messy ideas into working software.\n\nWhen I'm not writing code or exploring new ML architectures, I'm usually participating in ACM BPHC initiatives or finding ways to make complex systems intuitive and fast.";
+  
+  const moreAboutMe = settings?.more_about_me || "I watch a lot of movies and TV shows. I'm currently learning German on Duolingo, and I'm very fond of puzzles and strategic games.";
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-24">
       <AnimatedSection>
@@ -21,17 +28,18 @@ export default function AboutPage() {
       <div className="mt-16 max-w-3xl space-y-24">
         {/* 1. Bio */}
         <AnimatedSection delay={0.1}>
-          <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
-            <p>
-              I&apos;m Siddharth Bayapureddy, a CS sophomore at BITS Pilani, Hyderabad. 
-              I build at the intersection of artificial intelligence, machine learning, 
-              and real-world problems — turning messy ideas into working software.
-            </p>
-            <p>
-              When I&apos;m not writing code or exploring new ML architectures, 
-              I&apos;m usually participating in ACM BPHC initiatives or finding ways 
-              to make complex systems intuitive and fast.
-            </p>
+          <div className="space-y-6 text-base leading-relaxed text-muted-foreground whitespace-pre-line">
+            {aboutBio}
+          </div>
+        </AnimatedSection>
+
+        {/* 1.5 More About Me */}
+        <AnimatedSection delay={0.15}>
+          <h2 className="mb-6 font-mono text-sm uppercase tracking-wider text-muted-foreground">
+            More About Me
+          </h2>
+          <div className="space-y-6 text-base leading-relaxed text-muted-foreground whitespace-pre-line">
+            {moreAboutMe}
           </div>
         </AnimatedSection>
 

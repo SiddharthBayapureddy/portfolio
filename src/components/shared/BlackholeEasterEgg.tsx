@@ -218,9 +218,8 @@ export function BlackholeEasterEgg({ active, onComplete }: BlackholeEasterEggPro
     }
 
     // ─── Big Bang Explosion Particles (Phase 2) ───
-    const EXP_COUNT = 4000; // Massive particle count for big bang
+    const EXP_COUNT = 4000;
     const expPos = new Float32Array(EXP_COUNT * 3);
-    const expColors = new Float32Array(EXP_COUNT * 3);
     const expData: ParticleData[] = [];
 
     for (let i = 0; i < EXP_COUNT; i++) {
@@ -246,8 +245,6 @@ export function BlackholeEasterEgg({ active, onComplete }: BlackholeEasterEggPro
     });
     const expPoints = new THREE.Points(expGeo, expMat);
     scene.add(expPoints);
-
-    // Removed Rings and Bloom
 
     // ─── Gather DOM Elements ───
     const domElements: HTMLElement[] = [];
@@ -357,18 +354,6 @@ export function BlackholeEasterEgg({ active, onComplete }: BlackholeEasterEggPro
         opacity: 0,
         duration: 3.5,
         ease: 'power3.in',
-        onUpdate: function() {
-          const progress = this.progress();
-          const target = getSingularity();
-          
-          // Current center of element
-          const rect = el.getBoundingClientRect();
-          // We must compute transform based on original cx/cy
-          // Since it's scaled and moved, calculating exact x/y to hit target:
-          // gsap natively moves relative to initial position.
-          // We can just animate x/y manually but GSAP is easier if target is static.
-          // Since target moves slightly with scroll, we'll just use the initial diff.
-        }
       }, startTime);
 
       // Using standard static dx/dy since GSAP x/y are fixed endpoints

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-export function GlitchName({ text, className }: { text: ReactNode; className?: string }) {
+export function GlitchName({ text, className }: { text: React.ReactNode; className?: string }) {
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
 

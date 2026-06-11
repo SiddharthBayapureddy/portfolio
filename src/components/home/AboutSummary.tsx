@@ -1,20 +1,27 @@
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-export function AboutSummary() {
+export function AboutSummary({ settings }: { settings?: Record<string, string> }) {
+  const aboutText = settings?.about_text || "I'm a computer science undergraduate specializing in AI and distributed systems.\nI build resilient backends and scalable machine learning pipelines, bringing research closer to production.";
+
   return (
-    <section className="px-6 py-24">
-      <div className="mx-auto max-w-4xl">
+    <section className="border-t border-border">
+      <div className="mx-auto max-w-5xl px-6 py-24">
         <AnimatedSection>
-          <h2 className="text-sm font-mono uppercase tracking-wider text-muted-foreground">
+          <h2 className="text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
             About
           </h2>
-          <div className="mt-8 space-y-6 text-base leading-relaxed text-foreground/90 md:text-lg">
-            <p>
-              My work lives at the intersection of ML engineering and systems thinking. I care about the full pipeline: not just whether a model learns something interesting, but whether it can detect drift, retrain itself, fail gracefully, and explain what's happening in plain English.
-            </p>
-            <p className="text-muted-foreground text-sm font-mono">
-              // When I'm not pushing code, I'm justifying rewatching GOT for the third time, keeping up with AI research, and aggressively recommending music to people who didn't ask.
-            </p>
+          <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg whitespace-pre-line">
+            {aboutText}
+          </p>
+          <div className="mt-8">
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 font-mono text-sm text-foreground transition-colors hover:text-muted-foreground"
+            >
+              Read more <ArrowRight className="size-4" />
+            </Link>
           </div>
         </AnimatedSection>
       </div>

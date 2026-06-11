@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(req: Request) {
   try {
@@ -10,7 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    const { name, message } = body;
+    const { name, email, message } = body;
 
     if (!message || typeof message !== "string") {
       return NextResponse.json(
@@ -19,7 +20,28 @@ export async function POST(req: Request) {
       );
     }
 
+    const senderEmail = email?.trim() || "no email provided";
     const senderName = name?.trim() || "An Anonymous Vibecoder";
+
+    // Save to Supabase database
+    try {
+      const supabase = createAdminClient();
+      const { error: dbError } = await supabase
+        .from("contact_submissions")
+        .insert([
+          {
+            name: senderName,
+            email: senderEmail,
+            message: message,
+          },
+        ]);
+
+      if (dbError) {
+        console.error("Supabase insert error:", dbError);
+      }
+    } catch (dbEx) {
+      console.error("Supabase client error:", dbEx);
+    }
 
     const user = process.env.EMAIL_USER;
     const pass = process.env.EMAIL_PASS;
@@ -41,7 +63,7 @@ export async function POST(req: Request) {
       from: `"${senderName}" <${user}>`, // Spoofing the 'from' name, but email is your own to avoid spam filters
       to: user, // Send to yourself
       subject: `Portfolio Message from ${senderName}`,
-      text: `You received a new message from your portfolio contact form:\n\nName: ${senderName}\n\nMessage:\n${message}`,
+      text: `You received a new message from your portfolio contact form:\n\nName: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${message}`,
     };
 
     await transporter.sendMail(mailOptions);

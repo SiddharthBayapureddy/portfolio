@@ -21,6 +21,7 @@ export type Post = {
   excerpt: string | null;
   content: string | null;
   published: boolean;
+  featured: boolean;
   created_at: string;
   updated_at: string;
 };

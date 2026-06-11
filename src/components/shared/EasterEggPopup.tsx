@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useToast } from "@/components/shared/EasterEggProvider";
 
 const EASTER_EGGS = [
@@ -48,44 +47,19 @@ export function EasterEggPopup() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Konami Code Implementation
-  useEffect(() => {
-    const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
-    let konamiIndex = 0;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === konamiCode[konamiIndex]) {
-        konamiIndex++;
-        if (konamiIndex === konamiCode.length) {
-          showToast("HESOYAM! Wait, wrong cheat. 🎮");
-          document.body.classList.toggle("glitch-active");
-          konamiIndex = 0;
-        }
-      } else {
-        konamiIndex = 0;
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showToast]);
-
-  // Matrix, Sudo, BarrelRoll, Chaos Implementations
+  // Matrix, BarrelRoll, Chaos Implementations
   useEffect(() => {
     const codes = {
       matrix: "matrix",
-      sudo: "sudo",
       barrel: "barrelroll",
       chaos: "chaos"
     };
     
     let matrixIdx = 0;
-    let sudoIdx = 0;
     let barrelIdx = 0;
     let chaosIdx = 0;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore if user is typing in an input field
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       const key = e.key.toLowerCase();
 
@@ -99,22 +73,13 @@ export function EasterEggPopup() {
         }
       } else { matrixIdx = 0; }
 
-      // Sudo
-      if (key === codes.sudo[sudoIdx]) {
-        sudoIdx++;
-        if (sudoIdx === codes.sudo.length) {
-          showToast("User is not in the sudoers file. This incident will be reported.");
-          sudoIdx = 0;
-        }
-      } else { sudoIdx = 0; }
-
       // Barrel Roll
       if (key === codes.barrel[barrelIdx]) {
         barrelIdx++;
         if (barrelIdx === codes.barrel.length) {
           showToast("Do a barrel roll!");
           document.body.classList.remove("barrel-roll");
-          void document.body.offsetWidth; // trigger reflow
+          void document.body.offsetWidth;
           document.body.classList.add("barrel-roll");
           barrelIdx = 0;
         }

@@ -1,3 +1,5 @@
+import type { Project } from "@/lib/types";
+
 export const ABOUT = {
   name: "Siddharth Bayapureddy",
   title: "Building AI systems that actually work — not just demos.",
@@ -6,29 +8,7 @@ export const ABOUT = {
   profileImage: "/profile.png",
 } as const;
 
-export const SKILLS = [
-  "Python",
-  "C++",
-  "SQL",
-  "PyTorch",
-  "XGBoost",
-  "Transformers",
-  "LangChain",
-  "LangGraph",
-  "RAG",
-  "AWS",
-  "Docker",
-  "FastAPI",
-] as const;
-
-export const QUOTE = {
-  text: "Sometimes the most interesting work starts as a question you can't stop thinking about.",
-  author: "SparseSynth (WIP)",
-} as const;
-
-export const EXPERIENCES = [] as const;
-
-export const PROJECTS: any[] = [
+export const PROJECTS: Project[] = [
   {
     id: "vigil",
     title: "Vigil — Autonomous MLOps Pipeline",

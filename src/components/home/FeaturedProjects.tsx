@@ -27,10 +27,10 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               </div>
             </AnimatedSection>
             
-            <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
               {projects.map((project, i) => (
-                <AnimatedSection key={project.id} delay={i * 0.1}>
-                  <ProjectCard project={project} className="h-full" />
+                <AnimatedSection key={project.id} delay={i * 0.1} className="h-full">
+                  <ProjectCard project={project} />
                 </AnimatedSection>
               ))}
             </div>

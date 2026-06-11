@@ -55,12 +55,12 @@ export function Footer() {
   return (
     <footer className="border-t border-border relative">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-4 px-6 py-6 text-center">
-        <p 
+        <button 
           onClick={() => showToast("yes, I wrote that myself")}
-          className="font-mono text-xs text-muted-foreground cursor-pointer select-none"
+          className="font-mono text-xs text-muted-foreground cursor-pointer select-none bg-transparent border-none p-0"
         >
           {SITE.name} · {SITE.domain} · {year}
-        </p>
+        </button>
         <div className="flex items-center gap-6">
           {SOCIAL_LINKS.map(({ href, label, icon: Icon }) => (
             <Link
