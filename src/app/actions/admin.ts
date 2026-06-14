@@ -29,9 +29,11 @@ export async function login(prevState: any, formData: FormData) {
 
   if (envSecret && secret === envSecret) {
     const cookieStore = await cookies();
+    const isProd = process.env.NODE_ENV === "production";
     cookieStore.set("admin_secret", secret, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isProd,
+      sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 1 week
     });
@@ -53,7 +55,10 @@ export async function savePost(formData: FormData) {
   const envSecret = process.env.ADMIN_SECRET;
   const isAuthForm = secretForm && envSecret && secretForm === envSecret;
   if (!isAuthForm) {
-    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+    if (!(await checkAuth())) {
+      const keys = Array.from(formData.keys()).join(", ");
+      return { error: `Auth Failed [Post]! formSecret=${secretForm ? "wrong or present" : "missing"}, formData keys=${keys}, cookie=missing, env=${envSecret ? "present" : "missing"}` };
+    }
   }
 
   const id = formData.get("id") as string | null;
@@ -108,10 +113,12 @@ export async function saveProject(formData: FormData) {
   const secretForm = formData.get("admin_secret") as string | null;
   const envSecret = process.env.ADMIN_SECRET;
   
-  // Try checking the hidden form field first, then fallback to cookies
   const isAuthForm = secretForm && envSecret && secretForm === envSecret;
   if (!isAuthForm) {
-    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+    if (!(await checkAuth())) {
+      const keys = Array.from(formData.keys()).join(", ");
+      return { error: `Auth Failed! formSecret=${secretForm ? "wrong or present" : "missing"}, formData keys=${keys}, cookie=missing` };
+    }
   }
   
   const id = formData.get("id") as string | null;
@@ -195,7 +202,10 @@ export async function saveExperience(formData: FormData) {
   const envSecret = process.env.ADMIN_SECRET;
   const isAuthForm = secretForm && envSecret && secretForm === envSecret;
   if (!isAuthForm) {
-    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+    if (!(await checkAuth())) {
+      const keys = Array.from(formData.keys()).join(", ");
+      return { error: `Auth Failed [Exp]! secretForm=${secretForm ? "PRESENT BUT MISMATCH" : "MISSING"}, keys=${keys}, cookie=missing, env=${envSecret ? "present" : "missing"}` };
+    }
   }
   
   const id = formData.get("id") as string | null;
@@ -247,7 +257,10 @@ export async function saveSkill(formData: FormData) {
   const envSecret = process.env.ADMIN_SECRET;
   const isAuthForm = secretForm && envSecret && secretForm === envSecret;
   if (!isAuthForm) {
-    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+    if (!(await checkAuth())) {
+      const keys = Array.from(formData.keys()).join(", ");
+      return { error: `Auth Failed [Skill]! secretForm=${secretForm ? "PRESENT BUT MISMATCH" : "MISSING"}, keys=${keys}, cookie=missing, env=${envSecret ? "present" : "missing"}` };
+    }
   }
   
   const id = formData.get("id") as string | null;
@@ -290,7 +303,10 @@ export async function saveSettings(formData: FormData) {
   const envSecret = process.env.ADMIN_SECRET;
   const isAuthForm = secretForm && envSecret && secretForm === envSecret;
   if (!isAuthForm) {
-    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+    if (!(await checkAuth())) {
+      const keys = Array.from(formData.keys()).join(", ");
+      return { error: `Auth Failed [Settings]! secretForm=${secretForm ? "PRESENT BUT MISMATCH" : "MISSING"}, keys=${keys}, cookie=missing, env=${envSecret ? "present" : "missing"}` };
+    }
   }
   const supabase = createAdminClient();
   
