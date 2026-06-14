@@ -11,7 +11,8 @@ export function ExperienceEditor({ experience }: { experience?: any }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
-        await saveExperience(formData);
+        const res = await saveExperience(formData);
+        if (res?.error) return { error: res.error };
         return { success: true };
       } catch (err: any) {
         if (err?.message === "NEXT_REDIRECT") throw err;

@@ -10,9 +10,11 @@ export function SettingsEditor({ settings }: { settings: Record<string, string> 
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
-        await saveSettings(formData);
+        const res = await saveSettings(formData);
+        if (res?.error) return { error: res.error };
         return { success: true };
       } catch (err: any) {
+        if (err?.message === "NEXT_REDIRECT") throw err;
         return { error: err.message };
       }
     },

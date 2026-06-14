@@ -4,11 +4,10 @@ import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
 
 export const metadata = createMetadata({
-  title: "Projects",
-  description:
-    "Projects in AI, machine learning, and full-stack development.",
-  path: "/projects",
+  title: "Projects | Siddharth Bayapureddy",
+  description: "A collection of my technical projects, open-source contributions, and experiments.",
 });
+export const revalidate = 3600;
 
 export default async function ProjectsPage() {
   const projects = await getProjects();

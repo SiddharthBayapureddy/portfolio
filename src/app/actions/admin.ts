@@ -42,7 +42,7 @@ export async function logout() {
 
 
 export async function savePost(formData: FormData) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
 
   const id = formData.get("id") as string | null;
   const title = formData.get("title") as string;
@@ -67,11 +67,11 @@ export async function savePost(formData: FormData) {
   if (id && id !== "new") {
     // Update existing
     const { error } = await supabase.from("posts").update(postData).eq("id", id);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Update Failed: " + error.message };
   } else {
     // Create new
     const { error } = await supabase.from("posts").insert([postData]);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Insert Failed: " + error.message };
   }
 
   revalidatePath("/blog", "layout");
@@ -89,7 +89,7 @@ export async function deletePost(id: string) {
 }
 
 export async function saveProject(formData: FormData) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
   
   const id = formData.get("id") as string | null;
   const tagsString = formData.get("tags") as string;
@@ -130,7 +130,7 @@ export async function saveProject(formData: FormData) {
       });
 
     if (uploadError) {
-      throw new Error("Image upload failed: " + uploadError.message);
+      return { error: "Storage Upload Failed: " + uploadError.message };
     }
 
     const { data: { publicUrl } } = supabase.storage
@@ -142,10 +142,10 @@ export async function saveProject(formData: FormData) {
 
   if (id && id !== "new") {
     const { error } = await supabase.from("projects").update(projectData).eq("id", id);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Update Failed: " + error.message };
   } else {
     const { error } = await supabase.from("projects").insert([projectData]);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Insert Failed: " + error.message };
   }
   revalidatePath("/projects", "layout");
   revalidatePath("/admin/projects", "layout");
@@ -164,7 +164,7 @@ export async function deleteProject(id: string) {
 }
 
 export async function saveExperience(formData: FormData) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
   
   const id = formData.get("id") as string | null;
   const skillsString = formData.get("skills") as string;
@@ -185,10 +185,10 @@ export async function saveExperience(formData: FormData) {
   const supabase = createAdminClient();
   if (id && id !== "new") {
     const { error } = await supabase.from("experiences").update(expData).eq("id", id);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Update Failed: " + error.message };
   } else {
     const { error } = await supabase.from("experiences").insert([expData]);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Insert Failed: " + error.message };
   }
   revalidatePath("/experience", "layout");
   revalidatePath("/admin/experiences", "layout");
@@ -207,7 +207,7 @@ export async function deleteExperience(id: string) {
 }
 
 export async function saveSkill(formData: FormData) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
   
   const id = formData.get("id") as string | null;
   const skillData = {
@@ -219,10 +219,10 @@ export async function saveSkill(formData: FormData) {
   const supabase = createAdminClient();
   if (id && id !== "new") {
     const { error } = await supabase.from("skills").update(skillData).eq("id", id);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Update Failed: " + error.message };
   } else {
     const { error } = await supabase.from("skills").insert([skillData]);
-    if (error) throw new Error(error.message);
+    if (error) return { error: "DB Insert Failed: " + error.message };
   }
   revalidatePath("/skills", "layout");
   revalidatePath("/admin/skills", "layout");
@@ -241,7 +241,7 @@ export async function deleteSkill(id: string) {
 }
 
 export async function saveSettings(formData: FormData) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
   const supabase = createAdminClient();
   
   const settings = {
@@ -257,7 +257,7 @@ export async function saveSettings(formData: FormData) {
     const { error } = await supabase
       .from("site_settings")
       .upsert({ key, value }, { onConflict: "key" });
-    if (error) throw new Error(`Failed to save ${key}: ` + error.message);
+    if (error) return { error: `Failed to save ${key}: ` + error.message };
   }
 
   revalidatePath("/", "layout");

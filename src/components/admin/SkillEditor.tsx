@@ -10,7 +10,8 @@ export function SkillEditor({ skill }: { skill?: any }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
-        await saveSkill(formData);
+        const res = await saveSkill(formData);
+        if (res?.error) return { error: res.error };
         return { success: true };
       } catch (err: any) {
         if (err?.message === "NEXT_REDIRECT") throw err;
