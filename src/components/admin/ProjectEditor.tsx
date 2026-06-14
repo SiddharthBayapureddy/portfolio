@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import { isRedirectError } from "next/navigation";
 import { saveProject } from "@/app/actions/admin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +14,7 @@ export function ProjectEditor({ project }: { project?: any }) {
         await saveProject(formData);
         return { success: true };
       } catch (err: any) {
-        if (isRedirectError(err)) throw err;
+        if (err?.message === "NEXT_REDIRECT") throw err;
         return { error: err.message };
       }
     },
