@@ -16,6 +16,13 @@ export async function checkAuth() {
   return true;
 }
 
+export async function getAuthError() {
+  const cookieStore = await cookies();
+  const secret = cookieStore.get("admin_secret")?.value;
+  const envSecret = process.env.ADMIN_SECRET;
+  return `cookie=${secret ? "present" : "missing"}, env=${envSecret ? "present" : "missing"}`;
+}
+
 export async function login(prevState: any, formData: FormData) {
   const secret = formData.get("secret") as string;
   const envSecret = process.env.ADMIN_SECRET;
@@ -42,7 +49,7 @@ export async function logout() {
 
 
 export async function savePost(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
+  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
 
   const id = formData.get("id") as string | null;
   const title = formData.get("title") as string;
@@ -89,7 +96,7 @@ export async function deletePost(id: string) {
 }
 
 export async function saveProject(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
+  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
   
   const id = formData.get("id") as string | null;
   const tagsString = formData.get("tags") as string;
@@ -164,7 +171,7 @@ export async function deleteProject(id: string) {
 }
 
 export async function saveExperience(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
+  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
   
   const id = formData.get("id") as string | null;
   const skillsString = formData.get("skills") as string;
@@ -207,7 +214,7 @@ export async function deleteExperience(id: string) {
 }
 
 export async function saveSkill(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
+  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
   
   const id = formData.get("id") as string | null;
   const skillData = {
@@ -241,7 +248,7 @@ export async function deleteSkill(id: string) {
 }
 
 export async function saveSettings(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: Unauthorized cookie" };
+  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
   const supabase = createAdminClient();
   
   const settings = {
