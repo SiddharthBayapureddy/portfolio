@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function SettingsEditor({ settings, adminSecret }: { settings?: Record<string, string>, adminSecret?: string }) {
+export function SettingsEditor({ settings, adminSecret }: { settings: Record<string, string>, adminSecret?: string }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
