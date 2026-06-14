@@ -4,12 +4,16 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { cookies } from "next/headers";
 
 export default async function AdminProjects() {
 
 
   const supabase = createAdminClient();
   const { data: projects } = await supabase.from("projects").select("*").order("order_index", { ascending: true });
+
+  const cookieStore = await cookies();
+  const secret = cookieStore.get("admin_secret")?.value;
 
   return (
     <div>
@@ -30,7 +34,7 @@ export default async function AdminProjects() {
             </div>
             <div className="flex gap-2">
               <Link href={`/admin/projects/${project.id}`}><Button variant="outline" size="sm">Edit</Button></Link>
-              <DeleteButton id={project.id} action={deleteProject} />
+              <DeleteButton id={project.id} action={deleteProject} adminSecret={secret} />
             </div>
           </div>
         ))}

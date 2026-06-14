@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function SkillEditor({ skill }: { skill?: any }) {
+export function SkillEditor({ skill, adminSecret }: { skill?: any, adminSecret?: string }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
@@ -22,8 +22,9 @@ export function SkillEditor({ skill }: { skill?: any }) {
   );
 
   return (
-    <form action={formAction} className="space-y-6 max-w-md">
+    <form action={formAction} className="space-y-6">
       <input type="hidden" name="id" value={skill?.id || "new"} />
+      {adminSecret && <input type="hidden" name="admin_secret" value={adminSecret} />}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">{skill ? "Edit Skill" : "Add Skill"}</h2>
         <Button type="submit" disabled={isPending}>{isPending ? "Saving..." : "Save"}</Button>

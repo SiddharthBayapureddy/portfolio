@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function PostEditor({ post }: { post?: any }) {
+export function PostEditor({ post, adminSecret }: { post?: any, adminSecret?: string }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
@@ -25,6 +25,7 @@ export function PostEditor({ post }: { post?: any }) {
   return (
     <form action={formAction} className="space-y-6">
       <input type="hidden" name="id" value={post?.id || "new"} />
+      {adminSecret && <input type="hidden" name="admin_secret" value={adminSecret} />}
       
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">

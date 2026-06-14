@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function ExperienceEditor({ experience }: { experience?: any }) {
+export function ExperienceEditor({ experience, adminSecret }: { experience?: any, adminSecret?: string }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
@@ -25,6 +25,7 @@ export function ExperienceEditor({ experience }: { experience?: any }) {
   return (
     <form action={formAction} className="space-y-6">
       <input type="hidden" name="id" value={experience?.id || "new"} />
+      {adminSecret && <input type="hidden" name="admin_secret" value={adminSecret} />}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">{experience ? "Edit Experience" : "Add Experience"}</h2>
         <Button type="submit" disabled={isPending}>{isPending ? "Saving..." : "Save"}</Button>

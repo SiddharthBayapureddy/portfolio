@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 
 export function DeleteButton({ 
   id, 
-  action 
+  action,
+  adminSecret
 }: { 
   id: string; 
-  action: (id: string) => Promise<void>;
+  action: (id: string, secret?: string) => Promise<void>;
+  adminSecret?: string;
 }) {
   const [isPending, startTransition] = useTransition();
   const [confirmLevel, setConfirmLevel] = useState(0);
@@ -33,7 +35,7 @@ export function DeleteButton({
       setConfirmLevel(3);
       startTransition(async () => {
         try {
-          await action(id);
+          await action(id, adminSecret);
         } catch (err) {
           console.error(err);
           setConfirmLevel(0);

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function SettingsEditor({ settings }: { settings: Record<string, string> }) {
+export function SettingsEditor({ settings, adminSecret }: { settings?: Record<string, string>, adminSecret?: string }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
@@ -22,8 +22,9 @@ export function SettingsEditor({ settings }: { settings: Record<string, string> 
   );
 
   return (
-    <form action={formAction} className="space-y-6 max-w-2xl">
-      <div className="flex justify-between items-center">
+    <form action={formAction} className="space-y-6">
+      {adminSecret && <input type="hidden" name="admin_secret" value={adminSecret} />}
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-semibold">Homepage Settings</h2>
         <Button type="submit" disabled={isPending}>{isPending ? "Saving..." : "Save Settings"}</Button>
       </div>

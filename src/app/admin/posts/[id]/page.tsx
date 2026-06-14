@@ -1,7 +1,7 @@
-
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PostEditor } from "@/components/admin/PostEditor";
+import { cookies } from "next/headers";
 
 export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
 
@@ -24,9 +24,12 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
     post = data;
   }
 
+  const cookieStore = await cookies();
+  const secret = cookieStore.get("admin_secret")?.value;
+
   return (
     <div>
-      <PostEditor post={post} />
+      <PostEditor post={post} adminSecret={secret} />
     </div>
   );
 }

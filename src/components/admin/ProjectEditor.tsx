@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function ProjectEditor({ project }: { project?: any }) {
+export function ProjectEditor({ project, adminSecret }: { project?: any, adminSecret?: string }) {
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {
@@ -25,6 +25,7 @@ export function ProjectEditor({ project }: { project?: any }) {
   return (
     <form action={formAction} className="space-y-6">
       <input type="hidden" name="id" value={project?.id || "new"} />
+      {adminSecret && <input type="hidden" name="admin_secret" value={adminSecret} />}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">{project ? "Edit Project" : "Create Project"}</h2>
         <Button type="submit" disabled={isPending}>{isPending ? "Saving..." : "Save Project"}</Button>

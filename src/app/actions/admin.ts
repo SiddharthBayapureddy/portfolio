@@ -49,7 +49,12 @@ export async function logout() {
 
 
 export async function savePost(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  const secretForm = formData.get("admin_secret") as string | null;
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  }
 
   const id = formData.get("id") as string | null;
   const title = formData.get("title") as string;
@@ -86,8 +91,12 @@ export async function savePost(formData: FormData) {
   redirect("/admin");
 }
 
-export async function deletePost(id: string) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+export async function deletePost(id: string, secretForm?: string) {
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) throw new Error("Unauthorized");
+  }
   const supabase = createAdminClient();
   const { error } = await supabase.from("posts").delete().eq("id", id);
   if (error) throw new Error(error.message);
@@ -96,7 +105,14 @@ export async function deletePost(id: string) {
 }
 
 export async function saveProject(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  const secretForm = formData.get("admin_secret") as string | null;
+  const envSecret = process.env.ADMIN_SECRET;
+  
+  // Try checking the hidden form field first, then fallback to cookies
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  }
   
   const id = formData.get("id") as string | null;
   const tagsString = formData.get("tags") as string;
@@ -160,8 +176,12 @@ export async function saveProject(formData: FormData) {
   redirect("/admin/projects");
 }
 
-export async function deleteProject(id: string) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+export async function deleteProject(id: string, secretForm?: string) {
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) throw new Error("Unauthorized");
+  }
   const supabase = createAdminClient();
   const { error } = await supabase.from("projects").delete().eq("id", id);
   if (error) throw new Error(error.message);
@@ -171,7 +191,12 @@ export async function deleteProject(id: string) {
 }
 
 export async function saveExperience(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  const secretForm = formData.get("admin_secret") as string | null;
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  }
   
   const id = formData.get("id") as string | null;
   const skillsString = formData.get("skills") as string;
@@ -203,8 +228,12 @@ export async function saveExperience(formData: FormData) {
   redirect("/admin/experiences");
 }
 
-export async function deleteExperience(id: string) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+export async function deleteExperience(id: string, secretForm?: string) {
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) throw new Error("Unauthorized");
+  }
   const supabase = createAdminClient();
   const { error } = await supabase.from("experiences").delete().eq("id", id);
   if (error) throw new Error(error.message);
@@ -214,7 +243,12 @@ export async function deleteExperience(id: string) {
 }
 
 export async function saveSkill(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  const secretForm = formData.get("admin_secret") as string | null;
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  }
   
   const id = formData.get("id") as string | null;
   const skillData = {
@@ -237,8 +271,12 @@ export async function saveSkill(formData: FormData) {
   redirect("/admin/skills");
 }
 
-export async function deleteSkill(id: string) {
-  if (!(await checkAuth())) throw new Error("Unauthorized");
+export async function deleteSkill(id: string, secretForm?: string) {
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) throw new Error("Unauthorized");
+  }
   const supabase = createAdminClient();
   const { error } = await supabase.from("skills").delete().eq("id", id);
   if (error) throw new Error(error.message);
@@ -248,7 +286,12 @@ export async function deleteSkill(id: string) {
 }
 
 export async function saveSettings(formData: FormData) {
-  if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  const secretForm = formData.get("admin_secret") as string | null;
+  const envSecret = process.env.ADMIN_SECRET;
+  const isAuthForm = secretForm && envSecret && secretForm === envSecret;
+  if (!isAuthForm) {
+    if (!(await checkAuth())) return { error: "Auth Check Failed: " + await getAuthError() };
+  }
   const supabase = createAdminClient();
   
   const settings = {
