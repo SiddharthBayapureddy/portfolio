@@ -2,12 +2,15 @@
 
 import { useActionState } from "react";
 import { saveExperience } from "@/app/actions/admin";
+import { useAdminSecret } from "@/components/admin/AdminProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function ExperienceEditor({ experience, adminSecret }: { experience?: any, adminSecret?: string }) {
+export function ExperienceEditor({ experience, adminSecret: propSecret }: { experience?: any, adminSecret?: string }) {
+  const contextSecret = useAdminSecret();
+  const adminSecret = propSecret || contextSecret;
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {

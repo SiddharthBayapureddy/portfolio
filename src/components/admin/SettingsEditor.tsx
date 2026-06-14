@@ -2,11 +2,14 @@
 
 import { useActionState } from "react";
 import { saveSettings } from "@/app/actions/admin";
+import { useAdminSecret } from "@/components/admin/AdminProvider";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function SettingsEditor({ settings, adminSecret }: { settings: Record<string, string>, adminSecret?: string }) {
+export function SettingsEditor({ settings, adminSecret: propSecret }: { settings: Record<string, string>, adminSecret?: string }) {
+  const contextSecret = useAdminSecret();
+  const adminSecret = propSecret || contextSecret;
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {

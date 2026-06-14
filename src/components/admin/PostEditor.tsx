@@ -2,12 +2,15 @@
 
 import { useActionState } from "react";
 import { savePost } from "@/app/actions/admin";
+import { useAdminSecret } from "@/components/admin/AdminProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export function PostEditor({ post, adminSecret }: { post?: any, adminSecret?: string }) {
+export function PostEditor({ post, adminSecret: propSecret }: { post?: any, adminSecret?: string }) {
+  const contextSecret = useAdminSecret();
+  const adminSecret = propSecret || contextSecret;
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {

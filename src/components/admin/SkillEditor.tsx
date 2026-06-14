@@ -2,11 +2,14 @@
 
 import { useActionState } from "react";
 import { saveSkill } from "@/app/actions/admin";
+import { useAdminSecret } from "@/components/admin/AdminProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function SkillEditor({ skill, adminSecret }: { skill?: any, adminSecret?: string }) {
+export function SkillEditor({ skill, adminSecret: propSecret }: { skill?: any, adminSecret?: string }) {
+  const contextSecret = useAdminSecret();
+  const adminSecret = propSecret || contextSecret;
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       try {

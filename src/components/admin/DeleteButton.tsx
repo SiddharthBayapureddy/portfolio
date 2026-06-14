@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { useAdminSecret } from "@/components/admin/AdminProvider";
 
 export function DeleteButton({ 
   id, 
@@ -12,6 +13,8 @@ export function DeleteButton({
   action: (id: string, secret?: string) => Promise<void>;
   adminSecret?: string;
 }) {
+  const contextSecret = useAdminSecret();
+  const secret = adminSecret || contextSecret;
   const [isPending, startTransition] = useTransition();
   const [confirmLevel, setConfirmLevel] = useState(0);
 
@@ -35,7 +38,7 @@ export function DeleteButton({
       setConfirmLevel(3);
       startTransition(async () => {
         try {
-          await action(id, adminSecret);
+          await action(id, secret);
         } catch (err) {
           console.error(err);
           setConfirmLevel(0);
