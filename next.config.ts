@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  serverActions: {
+    bodySizeLimit: "100mb",
+  },
   images: {
     remotePatterns: [
       {

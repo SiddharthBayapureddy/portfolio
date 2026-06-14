@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { isRedirectError } from "next/navigation";
 import { saveSkill } from "@/app/actions/admin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ export function SkillEditor({ skill }: { skill?: any }) {
         await saveSkill(formData);
         return { success: true };
       } catch (err: any) {
+        if (isRedirectError(err)) throw err;
         return { error: err.message };
       }
     },

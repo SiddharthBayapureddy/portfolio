@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { isRedirectError } from "next/navigation";
 import { saveExperience } from "@/app/actions/admin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ export function ExperienceEditor({ experience }: { experience?: any }) {
         await saveExperience(formData);
         return { success: true };
       } catch (err: any) {
+        if (isRedirectError(err)) throw err;
         return { error: err.message };
       }
     },

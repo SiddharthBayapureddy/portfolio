@@ -74,8 +74,8 @@ export async function savePost(formData: FormData) {
     if (error) throw new Error(error.message);
   }
 
-  revalidatePath("/blog");
-  revalidatePath("/admin");
+  revalidatePath("/blog", "layout");
+  revalidatePath("/admin", "layout");
   redirect("/admin");
 }
 
@@ -84,8 +84,8 @@ export async function deletePost(id: string) {
   const supabase = createAdminClient();
   const { error } = await supabase.from("posts").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/blog");
-  revalidatePath("/admin");
+  revalidatePath("/blog", "layout");
+  revalidatePath("/admin", "layout");
 }
 
 export async function saveProject(formData: FormData) {
@@ -123,7 +123,7 @@ export async function saveProject(formData: FormData) {
     const fileName = `${projectData.slug}-${Date.now()}.${fileExt}`;
     
     const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("project_images")
+      .from("projects")
       .upload(fileName, imageFile, {
         cacheControl: '3600',
         upsert: true,
@@ -134,7 +134,7 @@ export async function saveProject(formData: FormData) {
     }
 
     const { data: { publicUrl } } = supabase.storage
-      .from("project_images")
+      .from("projects")
       .getPublicUrl(fileName);
 
     projectData.thumbnail_url = publicUrl;
@@ -147,8 +147,9 @@ export async function saveProject(formData: FormData) {
     const { error } = await supabase.from("projects").insert([projectData]);
     if (error) throw new Error(error.message);
   }
-  revalidatePath("/projects");
-  revalidatePath("/admin/projects");
+  revalidatePath("/projects", "layout");
+  revalidatePath("/admin/projects", "layout");
+  revalidatePath("/", "layout");
   redirect("/admin/projects");
 }
 
@@ -157,8 +158,9 @@ export async function deleteProject(id: string) {
   const supabase = createAdminClient();
   const { error } = await supabase.from("projects").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/projects");
-  revalidatePath("/admin/projects");
+  revalidatePath("/projects", "layout");
+  revalidatePath("/admin/projects", "layout");
+  revalidatePath("/", "layout");
 }
 
 export async function saveExperience(formData: FormData) {
@@ -188,8 +190,9 @@ export async function saveExperience(formData: FormData) {
     const { error } = await supabase.from("experiences").insert([expData]);
     if (error) throw new Error(error.message);
   }
-  revalidatePath("/experience");
-  revalidatePath("/admin/experiences");
+  revalidatePath("/experience", "layout");
+  revalidatePath("/admin/experiences", "layout");
+  revalidatePath("/", "layout");
   redirect("/admin/experiences");
 }
 
@@ -198,8 +201,9 @@ export async function deleteExperience(id: string) {
   const supabase = createAdminClient();
   const { error } = await supabase.from("experiences").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/experience");
-  revalidatePath("/admin/experiences");
+  revalidatePath("/experience", "layout");
+  revalidatePath("/admin/experiences", "layout");
+  revalidatePath("/", "layout");
 }
 
 export async function saveSkill(formData: FormData) {
@@ -220,8 +224,9 @@ export async function saveSkill(formData: FormData) {
     const { error } = await supabase.from("skills").insert([skillData]);
     if (error) throw new Error(error.message);
   }
-  revalidatePath("/skills");
-  revalidatePath("/admin/skills");
+  revalidatePath("/skills", "layout");
+  revalidatePath("/admin/skills", "layout");
+  revalidatePath("/", "layout");
   redirect("/admin/skills");
 }
 
@@ -230,9 +235,9 @@ export async function deleteSkill(id: string) {
   const supabase = createAdminClient();
   const { error } = await supabase.from("skills").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath("/skills");
-  revalidatePath("/admin/skills");
-  revalidatePath("/");
+  revalidatePath("/skills", "layout");
+  revalidatePath("/admin/skills", "layout");
+  revalidatePath("/", "layout");
 }
 
 export async function saveSettings(formData: FormData) {
@@ -255,6 +260,6 @@ export async function saveSettings(formData: FormData) {
     if (error) throw new Error(`Failed to save ${key}: ` + error.message);
   }
 
-  revalidatePath("/");
-  revalidatePath("/admin/settings");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/settings", "layout");
 }
