@@ -2,11 +2,11 @@
   <rect width="1200" height="675" fill="#111116"/>
   <!-- Subtle grid -->
   <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
-    <circle cx="24" cy="24" r="0.8" fill="#3f3f46" opacity="0.35"/>
+    <circle cx="24" cy="24" r="0.8" fill="#3f3f46" opacity="0.5"/>
   </pattern>
   <rect width="1200" height="675" fill="url(#grid)"/>
   <!-- Rust-colored code lines - left -->
-  <g opacity="0.1" transform="translate(160, 210)">
+  <g opacity="0.3" transform="translate(160, 210)">
     <rect x="0" y="0" width="80" height="3" rx="1.5" fill="#F74C00"/>
     <rect x="0" y="16" width="40" height="3" rx="1.5" fill="#a1a1aa"/>
     <rect x="24" y="32" width="140" height="3" rx="1.5" fill="#a1a1aa"/>
@@ -19,7 +19,7 @@
     <rect x="0" y="160" width="40" height="3" rx="1.5" fill="#a1a1aa"/>
   </g>
   <!-- Code lines - right -->
-  <g opacity="0.07" transform="translate(840, 230)">
+  <g opacity="0.2" transform="translate(840, 230)">
     <rect x="0" y="0" width="140" height="3" rx="1.5" fill="#a1a1aa"/>
     <rect x="24" y="16" width="90" height="3" rx="1.5" fill="#F74C00"/>
     <rect x="24" y="32" width="120" height="3" rx="1.5" fill="#a1a1aa"/>
@@ -29,22 +29,24 @@
     <rect x="24" y="112" width="130" height="3" rx="1.5" fill="#a1a1aa"/>
   </g>
   <!-- Center: Rust gear icon (simplified) -->
-  <g transform="translate(600, 320)" opacity="0.18">
+  <g transform="translate(600, 320)" opacity="0.55">
     <!-- Outer gear teeth -->
-    <path d="M0-52 L6-52 L8-44 L12-44 L16-52 L22-50 L20-42 L24-40 L30-46 L34-42 L28-36 L30-32 L38-34 L40-28 L32-26 L32-22 L40-18 L38-12 L30-16 L26-14 L28-6 L22-4 L20-12 L16-12 L16-4 L10-2 L10-10 L6-12 L2-4 L-4-6 L2-14 L-2-16 L-8-10 L-12-14 L-4-20 L-6-24 L-14-22 L-14-28 L-6-28 L-4-32 L-12-36 L-8-42 L0-36 L4-36 L4-44 Z" fill="none" stroke="#F74C00" stroke-width="1.5" transform="translate(0,24) scale(1.3)"/>
+    <path d="M0-52 L6-52 L8-44 L12-44 L16-52 L22-50 L20-42 L24-40 L30-46 L34-42 L28-36 L30-32 L38-34 L40-28 L32-26 L32-22 L40-18 L38-12 L30-16 L26-14 L28-6 L22-4 L20-12 L16-12 L16-4 L10-2 L10-10 L6-12 L2-4 L-4-6 L2-14 L-2-16 L-8-10 L-12-14 L-4-20 L-6-24 L-14-22 L-14-28 L-6-28 L-4-32 L-12-36 L-8-42 L0-36 L4-36 L4-44 Z" fill="none" stroke="#F74C00" stroke-width="2" transform="translate(0,24) scale(1.3)"/>
     <!-- Inner circle -->
-    <circle cx="0" cy="24" r="18" stroke="#F74C00" stroke-width="1.5" fill="none"/>
+    <circle cx="0" cy="24" r="18" stroke="#F74C00" stroke-width="2" fill="none"/>
     <!-- R letter -->
     <text x="0" y="31" text-anchor="middle" font-family="monospace" font-size="20" font-weight="bold" fill="#F74C00">R</text>
   </g>
-  <!-- Subtle fn main() hint -->
-  <text x="600" y="410" text-anchor="middle" font-family="monospace" font-size="13" fill="#F74C00" opacity="0.12">fn main()</text>
-  <!-- Vignette -->
+  <!-- fn main() hint -->
+  <text x="600" y="412" text-anchor="middle" font-family="monospace" font-size="13" fill="#F74C00" opacity="0.35">fn main()</text>
+  <!-- Soft glow behind gear -->
+  <circle cx="600" cy="320" r="100" fill="#F74C00" opacity="0.04"/>
+  <!-- Vignette - lighter -->
   <rect width="1200" height="675" fill="url(#vignette)"/>
   <defs>
-    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
       <stop offset="0%" stop-color="transparent"/>
-      <stop offset="100%" stop-color="#09090b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="0.45"/>
     </radialGradient>
   </defs>
 </svg>
