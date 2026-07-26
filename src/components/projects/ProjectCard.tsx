@@ -39,17 +39,15 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         className
       )}
     >
-      {project.thumbnail_url && (
-        <div className="relative aspect-[16/9] w-full border-b border-border bg-background">
+      <div className="relative aspect-[16/9] w-full border-b border-border bg-background">
           <Image
-            src={project.thumbnail_url}
+            src={project.thumbnail_url || "/placeholder-project.svg"}
             alt={project.title}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 672px"
           />
         </div>
-      )}
       <div className="p-5 flex-1 flex flex-col">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
