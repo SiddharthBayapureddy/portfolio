@@ -62,11 +62,14 @@ export async function savePost(formData: FormData) {
   }
 
   const id = formData.get("id") as string | null;
+  const isNew = !id || id === "new";
   const title = formData.get("title") as string;
   const slug = formData.get("slug") as string;
   const excerpt = formData.get("excerpt") as string;
   const content = formData.get("content") as string;
-  const published = formData.get("published") === "on";
+  // HTML checkboxes don't send any value when unchecked.
+  // For new items, default to true (published) if the field wasn't explicitly submitted.
+  const published = formData.has("published") ? formData.get("published") === "on" : isNew;
   const featured = formData.get("featured") === "on";
 
   const supabase = createAdminClient();
@@ -122,6 +125,7 @@ export async function saveProject(formData: FormData) {
   }
   
   const id = formData.get("id") as string | null;
+  const isNew = !id || id === "new";
   const tagsString = formData.get("tags") as string;
   const tags = tagsString ? tagsString.split(",").map(t => t.trim()).filter(Boolean) : [];
   
@@ -134,7 +138,9 @@ export async function saveProject(formData: FormData) {
     github_url: formData.get("github_url") || null,
     live_url: formData.get("live_url") || null,
     pinned: formData.get("pinned") === "on",
-    published: formData.get("published") === "on",
+    // HTML checkboxes don't send any value when unchecked.
+    // For new items, default to true (published) if the field wasn't explicitly submitted.
+    published: formData.has("published") ? formData.get("published") === "on" : isNew,
     order_index: parseInt(formData.get("order_index") as string) || 0,
   };
 
@@ -209,6 +215,7 @@ export async function saveExperience(formData: FormData) {
   }
   
   const id = formData.get("id") as string | null;
+  const isNew = !id || id === "new";
   const skillsString = formData.get("skills") as string;
   const skills = skillsString ? skillsString.split(",").map(t => t.trim()).filter(Boolean) : [];
 
@@ -220,7 +227,9 @@ export async function saveExperience(formData: FormData) {
     skills,
     link: formData.get("link") || null,
     pinned: formData.get("pinned") === "on",
-    published: formData.get("published") === "on",
+    // HTML checkboxes don't send any value when unchecked.
+    // For new items, default to true (published) if the field wasn't explicitly submitted.
+    published: formData.has("published") ? formData.get("published") === "on" : isNew,
     order_index: parseInt(formData.get("order_index") as string) || 0,
   };
 
